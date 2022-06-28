@@ -32,5 +32,15 @@ public class SpearThrust extends BaseCombo {
         // TODO Auto-generated method stub
         
     }
+
+    // TODO: Should make this less redundant
+    @Override
+    public void resetInput() {
+        this.inputList.clear();
+
+        this.inputList.add(NoteTypes.UP);
+        this.inputList.add(NoteTypes.LEFT);
+        this.inputList.add(NoteTypes.DOWN);
+    }
     
 }

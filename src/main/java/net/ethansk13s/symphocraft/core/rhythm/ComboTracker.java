@@ -10,11 +10,13 @@ public class ComboTracker {
     private Queue<NoteTypes> inputs;
     private Queue<NoteTypes> comparableInputs;
     private ArrayList<BaseCombo> combos;
+    private ArrayList<BaseCombo> filteredCombos;
 
     public ComboTracker(ArrayList<BaseCombo> combos) {
         this.inputs = new LinkedList<>();
         this.comparableInputs = new LinkedList<>();
         this.combos = combos;
+        this.filteredCombos = new ArrayList<>();
     }
 
     public Queue<NoteTypes> getInputs() {
@@ -38,7 +40,12 @@ public class ComboTracker {
                 this.combos.get(0).doAction();
                 this.comparableInputs.clear();
                 this.inputs.clear();
+                this.resetAllCombos();
             }
+        } else {
+            this.comparableInputs.clear();
+            this.inputs.clear();
+            this.resetAllCombos();
         }
     }
 
@@ -47,9 +54,26 @@ public class ComboTracker {
             Queue<NoteTypes> currentCombo = this.combos.get(i).getInputList();
             NoteTypes input = currentCombo.remove();
             currentCombo.add(input);
+
             if (!input.equals(note)) {
-                this.combos.remove(i);
+                BaseCombo combo = this.combos.remove(i);
+                this.filteredCombos.add(combo);
             }
+        }
+    }
+
+    private void resetAllCombos() {
+        if (this.combos.size() != 0) {
+            for (int i = 0; i < this.combos.size(); i++) {
+                this.combos.get(i).resetInput();
+    
+                if (this.filteredCombos.size() != 0) {
+                    this.combos.add(this.filteredCombos.remove(0));
+                }
+            }
+        } else {
+            this.combos.addAll(this.filteredCombos);
+            this.filteredCombos.clear();
         }
     }
 }
