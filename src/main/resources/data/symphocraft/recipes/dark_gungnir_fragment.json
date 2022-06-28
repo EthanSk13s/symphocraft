@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "RRR",
+      "RTR",
+      "RRR"
+    ],
+    "key": {
+      "R": {
+        "item": "symphocraft:rune_fragment"
+      },
+      "T": {
+        "item": "minecraft:trident"
+      }
+    },
+    "result": {
+      "item": "symphocraft:dark_gungnir_fragment",
+      "count": 1
+    }
+}
+
