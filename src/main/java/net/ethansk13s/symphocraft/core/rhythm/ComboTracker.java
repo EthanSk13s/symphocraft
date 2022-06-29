@@ -32,12 +32,26 @@ public class ComboTracker {
             NoteTypes currentNote = this.inputs.remove();
             this.eliminateCombo(currentNote);
             this.comparableInputs.add(currentNote);
-            Symphocraft.LOGGER.info(this.comparableInputs.toString());
         }
 
         if (this.combos.size() != 0) {
-            if (this.combos.get(0).getInputList().equals(this.comparableInputs)) {
-                this.combos.get(0).doAction();
+            Queue<NoteTypes> comboInputs = this.combos.get(0).getInputList();
+            if (comboInputs.equals(this.comparableInputs)) {
+                boolean isMatching = true;
+                Symphocraft.LOGGER.info(this.comparableInputs.toString());
+                while (isMatching && comboInputs.size() != 0) {
+                    NoteTypes currentInput = comboInputs.remove();
+                    NoteTypes comparableInput = this.comparableInputs.remove();
+
+                    if (!currentInput.equals(comparableInput)) {
+                        isMatching = false;
+                    }
+                }
+
+                if (isMatching) {
+                    this.combos.get(0).doAction();
+                }
+
                 this.comparableInputs.clear();
                 this.inputs.clear();
                 this.resetAllCombos();
